@@ -4,33 +4,18 @@ import ButtonControls from "./ButtonControls";
 import VideoPreview from "./VideoPreview";
 import { useState } from "react";
 import RecordView from "./RecordView";
+import useMediaServerAccess from "../../hooks/mediaServerAccess";
 
 const VideoView = () => {
   const [videoState, setVideoState] = useState<'preview' | 'recording' | 'playback'>('preview');
   const [videoFile, setVideoFile] = useState<File | null>(null);
-
+  const {saveVideoToServer} = useMediaServerAccess();
+  
   const handleOnSave = async () => {
     if (!videoFile) {
       return;
     }
-
-    const formData = new FormData();
-    formData.append('video', videoFile);
-
-    try {
-      const response = await fetch('http://localhost:8080/profiles/1/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        console.log('File uploaded successfully!');
-      } else {
-        console.log('File upload failed.');
-      }
-    } catch (error) {
-      console.error('There was an error uploading the file:', error);
-    }
+    await saveVideoToServer(videoFile)
 
   } 
 

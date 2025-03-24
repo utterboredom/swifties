@@ -15,8 +15,6 @@ app.use(bodyParser.urlencoded({limit:"50mb", extended: true}))
 const port = process.env.PORT || 3000;
 
 app.post("/profiles/:userId/upload", upload.single('video'), (req: Request, res: Response) => {
-
-  console.log(req.file)
   res.status(200).send({});
 
 });

@@ -1,0 +1,1 @@
+export const SERVER_URL="https://5d56-2600-8800-1700-383-6c88-e33c-36aa-f014.ngrok-free.app"

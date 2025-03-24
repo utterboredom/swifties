@@ -1,7 +1,7 @@
 import SwiftUI
 import WebKit
 
-private let webAppURL = URL(string: "https://5032-2600-8800-1700-383-6c88-e33c-36aa-f014.ngrok-free.app")!
+private let webAppURL = URL(string: "https://6807-2600-8800-1700-383-6c88-e33c-36aa-f014.ngrok-free.app")!
 
 /// Provides the state of loading web content
 public enum MagicTextState {

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import useGetMediaStream from "../../hooks/GetMediaStream";
+import useGetMediaStream from "../../hooks/mediaStream";
 
 const VideoPreview = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
