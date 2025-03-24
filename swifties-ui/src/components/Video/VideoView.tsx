@@ -3,18 +3,52 @@ import styled from "styled-components";
 import ButtonControls from "./ButtonControls";
 import VideoPreview from "./VideoPreview";
 import { useState } from "react";
-import useGetMediaStream from "../../hooks/GetMediaStream";
 import RecordView from "./RecordView";
 
 const VideoView = () => {
   const [videoState, setVideoState] = useState<'preview' | 'recording' | 'playback'>('preview');
+  const [videoFile, setVideoFile] = useState<File | null>(null);
 
+  const handleOnSave = async () => {
+    if (!videoFile) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('video', videoFile);
+
+    try {
+      const response = await fetch('http://localhost:8080/profiles/1/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log('File uploaded successfully!');
+      } else {
+        console.log('File upload failed.');
+      }
+    } catch (error) {
+      console.error('There was an error uploading the file:', error);
+    }
+
+  } 
+
+  const handleOnDiscard = () => {
+    setVideoState('preview');
+    setVideoFile(null)
+  }
+
+  
   return (
     <div>
       <ReactMediaRecorder
         video
+        onStop={(blobUrl,blob) => {
+          const file = new File([blob], "video.txt", { type: "text/plain" });
+          setVideoFile(file);
+        }}
         render={({
-          status,
           startRecording,
           stopRecording,
           mediaBlobUrl,
@@ -28,7 +62,8 @@ const VideoView = () => {
               stopRecord={stopRecording}
               onStartRecord={() => setVideoState('recording')}
               onStopRecord={() => setVideoState('playback')}
-              onDiscard={() => setVideoState('preview')}
+              onDiscard={handleOnDiscard}
+              onSave={handleOnSave}
             />
             {(videoState==='playback') && <Video src={mediaBlobUrl} autoPlay playsInline loop />}
             {(videoState==='preview') && <VideoPreview/>}
