@@ -15,6 +15,7 @@ There are two endpoints that rely on Ngrok in order for you to use an iOS device
 the server which runs on port 8080
 - if on a mac open up /Users/<user>/Library/Application Support/ngrok/ngrok.yml
 - add the following lines after agent:
+```
   tunnels:
   ui:
     addr: 3000
@@ -23,7 +24,7 @@ the server which runs on port 8080
     addr: 8080
     proto: http
 - in another terminal window run ngrok start --all
-  
+```
 ## Usage
 ### SwiftUI
 - Modify `MagicText` and add in your ngrok tunnel URL
