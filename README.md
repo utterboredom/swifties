@@ -23,8 +23,9 @@ the server which runs on port 8080
   server:
     addr: 8080
     proto: http
-- in another terminal window run ngrok start --all
 ```
+- in another terminal window run ngrok start --all
+
 ## Usage
 ### SwiftUI
 - Modify `MagicText` and add in your ngrok tunnel URL
