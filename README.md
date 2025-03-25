@@ -11,13 +11,29 @@ the microphone and camera the iOS simulators are unfortunately not sufficient.  
 This package relies on a modified version of `MagicText` and requires `iOS 8` or later. `SwiftUI` support requires `iOS 13` or later.
 
 ## Usage
-
-### swifties-ui
-- npm install
-- npm run start
-- in another terminal window run ngrok http https://localhost:3000
-
 ### SwiftUI
 - Modify `MagicText` and add in your ngrok tunnel
 - Build and run
 
+### swifties-ui
+- cd ./swifties-ui
+- npm install
+- npm run start
+
+## File Server
+- cd ./server
+- run npm install
+- run ./node_modules/.bin/kysely migrate:up
+- in another terminal window run npm run dev
+
+## Ngrok
+- if on a mac open up /Users/<user>/Library/Application Support/ngrok/ngrok.yml
+- add the following lines after agent:
+  tunnels:
+  ui:
+    addr: 3000
+    proto: http
+  server:
+    addr: 8080
+    proto: http
+- in another terminal window run ngrok http https://localhost:3000
