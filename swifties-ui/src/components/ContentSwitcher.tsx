@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Welcome from "./Welcome"
 import VideoView from "./Video/VideoView"
+import ProfileViewer from "./Video/ProfileViewer"
 
 /* 
     This is mainly here because I didn't want to have to fiddle 
@@ -10,13 +11,18 @@ import VideoView from "./Video/VideoView"
 */
 const ContentSwitcher = ({}) => {
     const [page, setPage] = useState<"welcome" | "video"  | "browse">("welcome")
-
+    const [userId, setUserId] = useState<number>()
     const getPage = () => {
         switch (page) {
             case "video":
-                return <VideoView/>
+                return <VideoView onSave= {() => setPage('browse')} userId={userId}/>
+            case "browse" :
+                return <ProfileViewer />
             default:
-                return <Welcome onStart={() => setPage('video')}/>
+                return <Welcome onStart={(userId) => {
+                    setUserId(userId);
+                    setPage('video');
+                }}/>
         }
     }
 

@@ -6,17 +6,25 @@ import { useState } from "react";
 import RecordView from "./RecordView";
 import useMediaServerAccess from "../../hooks/mediaServerAccess";
 
-const VideoView = () => {
+
+type VideoViewProps = {
+  userId: number | undefined,
+  onSave: () => void
+}
+const VideoView = ({userId,onSave}: VideoViewProps) => {
   const [videoState, setVideoState] = useState<'preview' | 'recording' | 'playback'>('preview');
-  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<Blob | null>(null);
   const {saveVideoToServer} = useMediaServerAccess();
   
   const handleOnSave = async () => {
     if (!videoFile) {
       return;
     }
-    await saveVideoToServer(videoFile)
-
+    if(!userId) {
+      return;
+    }
+    await saveVideoToServer({userId, file:videoFile})
+    onSave()
   } 
 
   const handleOnDiscard = () => {
@@ -30,8 +38,7 @@ const VideoView = () => {
       <ReactMediaRecorder
         video
         onStop={(blobUrl,blob) => {
-          const file = new File([blob], "video.txt", { type: "text/plain" });
-          setVideoFile(file);
+          setVideoFile(blob);
         }}
         render={({
           startRecording,
