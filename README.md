@@ -36,4 +36,4 @@ This package relies on a modified version of `MagicText` and requires `iOS 8` or
   server:
     addr: 8080
     proto: http
-- in another terminal window run ngrok http https://localhost:3000
+- in another terminal window run ngrok start --all
